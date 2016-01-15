@@ -1,17 +1,25 @@
 DROP TABLE IF EXISTS Employees;
 DROP TABLE IF EXISTS EmployeesAtWork;
+DROP TABLE IF EXISTS History;
 
-CREATE TABLE IF NOT EXISTS Employees (
+CREATE TABLE Employees (
 	id_Employee INTEGER PRIMARY KEY AUTOINCREMENT,
 	Name TEXT,
+	Sex TEXT,
 	CodBadge TEXT
 );
 
+CREATE TABLE History (
+	Name TEXT,
+	Status TEXT,
+	Date TEXT
+);
+
 CREATE TABLE EmployeesAtWork (
-	id_EmployeeAtWork INTEGER PRIMARY KEY AUTOINCREMENT,
 	id_Employee INTEGER,
+	Date TEXT,
 	CONSTRAINT EmployeesAtWork_Employees FOREIGN KEY (id_Employee) REFERENCES Employees(id_Employee)
 );
 
-INSERT INTO Employees (Name,CodBadge) VALUES('Lele','1234');
-INSERT INTO Employees (Name,CodBadge) VALUES('Maria','4321');
+INSERT INTO Employees (Name,Sex,CodBadge) VALUES('Emanuele','M','74F8483');
+INSERT INTO Employees (Name,Sex,CodBadge) VALUES('Maria','F','8C166AC');

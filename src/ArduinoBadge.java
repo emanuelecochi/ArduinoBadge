@@ -16,35 +16,37 @@ public class ArduinoBadge {
 	
 	private Statement stmt = null;
 	private Connection conn = null;
-    
+    String[] listPort = null;
+	
 	public static void main(String args[]) throws ClassNotFoundException, SQLException, FileProblemException {
 
     	ArduinoBadge db = new ArduinoBadge();
-        db.Connection();
+        db.ConnectionDB();
 		
-		// Salvo in listPort la lista delle porte seriale presenti
-    	String[] listPort = ArduinoBadge.listPort();
+		// Save in listPort the list of the ports present
+    	db.listPort = ArduinoBadge.listPort();
         
-    	// Permetto la scelta della porta seriale da utilizzare
+    	// Allow the selection of the serial port to use
     	Scanner s = new Scanner(System.in);
 		int chosenPort = s.nextInt();
 		s.close();
-        SerialPort serialPort = new SerialPort(listPort[chosenPort-1]);
+        SerialPort serialPort = new SerialPort(db.listPort[chosenPort-1]);
 
         String input = "";
         
         try {
-        	// Apro la porta seriale
+        	// Open the serial port
             System.out.println("Port opened: " + serialPort.openPort());
-            // Imposto i parametri della porta seriale 
+            // Set the serial port parameters
             System.out.println("Params setted: " + serialPort.setParams(9600, 8, 1, 0));
             
             while(true) {
             	if (serialPort.readString()!=null) {
+            		// Read the first 7 byte
             		input = serialPort.readString(7); 
-            		System.out.println("Letto: " + input);
+            		System.out.println("Read: " + input);
                 	if (db.DBFind(input)) {
-                		System.out.println("Invio ad Arduino: " + serialPort.writeByte((byte)1));
+                		serialPort.writeByte((byte)1);
                 	}
                 	System.out.println("\n");
             	}
@@ -55,16 +57,16 @@ public class ArduinoBadge {
         }
 	}
 	
-	public void Connection() throws ClassNotFoundException, SQLException, FileProblemException {
+	public void ConnectionDB() throws ClassNotFoundException, SQLException, FileProblemException {
 		
-        System.out.println("\n0) inizializzazione.............................");
-		// carichiamo il bridge per SQLite
+        System.out.println("\n0) Initialization.............................");
+		// Load the bridge for SQLite
 		Class.forName("org.sqlite.JDBC");
-		// NOTA: per sqlite non serve password in realtà!
+		// NOTE: for sqlite we don't need the password!
 		conn = DriverManager.getConnection("jdbc:sqlite:files/DB_Badge.db", "root", "root");
 		
-		System.out.println("\n1) creazione tabelle............................");
-		// creiamo la struttura delle tabella
+		System.out.println("\n1) Creare le tabelle............................");
+		// Create the structur of the tables
 		stmt = conn.createStatement();
 		String sql = FileUtilities.read(new File("files/CreateDB_Badge.sql"));
 		stmt.executeUpdate(sql);
@@ -74,11 +76,11 @@ public class ArduinoBadge {
 	
 	public boolean DBFind(String input) throws ClassNotFoundException, SQLException, FileProblemException {
 		
-		//String input = "1234";
+		// String input = "1234";
 		// Instantiate a Date object
 	    Date date = new Date();
 		
-		System.out.println("\n2) Controllo Badge............................");
+		System.out.println("\n2) Check Badge............................");
 		stmt = conn.createStatement();
 		String queryFindBadge = "SELECT * FROM Employees WHERE CodBadge = '" + input + "'";
 		int id_Employee = 0;
@@ -87,7 +89,6 @@ public class ArduinoBadge {
 
 		ResultSet rs = stmt.executeQuery(queryFindBadge);
 		if (rs.next()) {
-			//System.out.println("Employee con codice " + input + " is present in DataBase");
 			nameEmployee = rs.getString("Name");
 			sexEmployee = rs.getString("Sex");
 			id_Employee = rs.getInt("id_Employee");	
@@ -104,8 +105,7 @@ public class ArduinoBadge {
 				stmt.close();
 				return true;
 			} else {
-				if (sexEmployee.equals("M")) System.out.println("Benvenuto! " + nameEmployee);
-				else if (sexEmployee.equals("F")) System.out.println("Benvenuta! " + nameEmployee);
+				System.out.println("Welcome! " + nameEmployee);
 				String queryInsert = "INSERT INTO EmployeesAtWork (id_Employee, Date) VALUES('" + id_Employee + "','" + date.toString() +"')";
 				String queryHistory = "INSERT INTO History (Name, Status, Date) VALUES('" + nameEmployee + "','ENTRATO','" + date.toString() +"')";
 				stmt.executeUpdate(queryInsert);
@@ -115,8 +115,7 @@ public class ArduinoBadge {
 				return true;
 			}
 		} else {
-			System.out.println("Employee con codice " + input + " is not present in DataBase");
-			System.out.println("Invio ad Arduino: ERROR");
+			System.out.println("ERROR: Employee with code " + input + " is not present in DataBase");
 			rs.close();
 			stmt.close();
 			return false;
@@ -125,7 +124,7 @@ public class ArduinoBadge {
 	
 	
 	public static String[] listPort() {	
-		// Salvo in portNames la lista delle porte seriali
+		// Save in portNames the list of the ports present
 		String[] portNames = SerialPortList.getPortNames();
 		        
 		if (portNames.length == 0) {

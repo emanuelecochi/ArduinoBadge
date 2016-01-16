@@ -22,4 +22,4 @@ CREATE TABLE EmployeesAtWork (
 );
 
 INSERT INTO Employees (Name,Sex,CodBadge) VALUES('Emanuele','M','74F8483');
-INSERT INTO Employees (Name,Sex,CodBadge) VALUES('Maria','F','8C166AC');
+INSERT INTO Employees (Name,Sex,CodBadge) VALUES('Alessia','F','8C166AC');

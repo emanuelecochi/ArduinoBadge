@@ -22,7 +22,6 @@ public class ArduinoBadge {
 
     	ArduinoBadge db = new ArduinoBadge();
         db.ConnectionDB();
-		
 		// Save in listPort the list of the ports present
     	db.listPort = ArduinoBadge.listPort();
         
@@ -44,8 +43,8 @@ public class ArduinoBadge {
             	if (serialPort.readString()!=null) {
             		// Read the first 7 byte
             		input = serialPort.readString(7); 
-            		System.out.println("Read: " + input);
-                	if (db.DBFind(input)) {
+            		System.out.println("\nRead: " + input);
+                	if (db.CheckBadge(input)) {
                 		serialPort.writeByte((byte)1);
                 	}
                 	System.out.println("\n");
@@ -65,7 +64,7 @@ public class ArduinoBadge {
 		// NOTE: for sqlite we don't need the password!
 		conn = DriverManager.getConnection("jdbc:sqlite:files/DB_Badge.db", "root", "root");
 		
-		System.out.println("\n1) Creare le tabelle............................");
+		System.out.println("\n1) Create tables............................\n");
 		// Create the structur of the tables
 		stmt = conn.createStatement();
 		String sql = FileUtilities.read(new File("files/CreateDB_Badge.sql"));
@@ -74,9 +73,8 @@ public class ArduinoBadge {
 		
 	}
 	
-	public boolean DBFind(String input) throws ClassNotFoundException, SQLException, FileProblemException {
+	public boolean CheckBadge(String input) throws ClassNotFoundException, SQLException, FileProblemException {
 		
-		// String input = "1234";
 		// Instantiate a Date object
 	    Date date = new Date();
 		
@@ -100,7 +98,7 @@ public class ArduinoBadge {
 				stmt.executeUpdate(queryDeleteEmployee);
 				String queryHistory = "INSERT INTO History (Name, Status, Date) VALUES('" + nameEmployee + "','USCITO','" + date.toString() +"')";
 				stmt.executeUpdate(queryHistory);
-				System.out.println("Arrivederci! " + nameEmployee);
+				System.out.println("Goodbye! " + nameEmployee);
 				rs.close();
 				stmt.close();
 				return true;

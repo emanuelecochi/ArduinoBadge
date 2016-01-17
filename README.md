@@ -1,8 +1,8 @@
 # ArduinoBadge
-This project allows to realize a system for controlling access through a reader rfid
+This project allows to realize a system for controlling access through a reader RFID.
 
 Contains:
-- Code Java for process the data coming from arduino and the DB in order to decide if the badge is enabled or not.
+- Code Java for process the data coming from arduino and the DB in order to decide if the badge is enabled or not
 - Sketch arduino
 
 The libraries necessary for sketch Arduino are:

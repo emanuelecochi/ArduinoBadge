@@ -96,7 +96,7 @@ public class ArduinoBadge {
 			if (rs.next()) {
 				String queryDeleteEmployee = "DELETE FROM EmployeesAtWork WHERE id_Employee = '" + id_Employee + "'";
 				stmt.executeUpdate(queryDeleteEmployee);
-				String queryHistory = "INSERT INTO History (Name, Status, Date) VALUES('" + nameEmployee + "','USCITO','" + date.toString() +"')";
+				String queryHistory = "INSERT INTO History (Name, Status, Date) VALUES('" + nameEmployee + "','OUT','" + date.toString() +"')";
 				stmt.executeUpdate(queryHistory);
 				System.out.println("Goodbye! " + nameEmployee);
 				rs.close();
@@ -105,7 +105,7 @@ public class ArduinoBadge {
 			} else {
 				System.out.println("Welcome! " + nameEmployee);
 				String queryInsert = "INSERT INTO EmployeesAtWork (id_Employee, Date) VALUES('" + id_Employee + "','" + date.toString() +"')";
-				String queryHistory = "INSERT INTO History (Name, Status, Date) VALUES('" + nameEmployee + "','ENTRATO','" + date.toString() +"')";
+				String queryHistory = "INSERT INTO History (Name, Status, Date) VALUES('" + nameEmployee + "','IN','" + date.toString() +"')";
 				stmt.executeUpdate(queryInsert);
 				stmt.executeUpdate(queryHistory);
 				rs.close();

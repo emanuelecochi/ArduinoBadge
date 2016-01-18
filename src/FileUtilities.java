@@ -15,7 +15,7 @@ import java.util.List;
 public class FileUtilities {
 
 	/**
-	 * leggo il contentuo di un file in una string
+	 * read the contents of a file into a string
 	 */
 	public static String read(final File input) throws FileProblemException {
 		try {
@@ -34,9 +34,9 @@ public class FileUtilities {
 			return buffer.toString();
 
 		} catch (FileNotFoundException e) {
-			throw new FileProblemException("Problemi nel leggere il file!");
+			throw new FileProblemException("Problems reading the file!");
 		} catch (IOException e) {
-			throw new FileProblemException("Problemi nel leggere il file!");
+			throw new FileProblemException("Problems reading the file!");
 		}
 	}
 
@@ -56,24 +56,24 @@ public class FileUtilities {
 			writer.close();
 
 		} catch (FileNotFoundException e) {
-			throw new FileProblemException("Problemi nel leggere il file!");
+			throw new FileProblemException("Problems reading the file!");
 		} catch (IOException e) {
-			throw new FileProblemException("Problemi nel leggere il file!");
+			throw new FileProblemException("Problems reading the file!");
 		}
 
 	}
 
 	/**
 	 * @param input
-	 *            - il file di input
-	 * @return - l'output Ë una lista contenente le righe del file
+	 *            - the input file
+	 * @return - the output is a list containing the lines of the file
 	 * @throws FileProblemException
-	 *             - Ë una eccezione che useremo per segnalare tutti i problemi
+	 *             - It is an exception that we will use to report all problems
 	 */
 	public static List<String> readLines(final File input) throws FileProblemException {
 		try {
 
-			// inizializzo la lista che conterr√† le righe lette
+			// initialize the list containing the lines read
 			List<String> lines = new ArrayList<String>();
 
 			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(input)));
@@ -87,14 +87,14 @@ public class FileUtilities {
 			return lines;
 
 		} catch (FileNotFoundException e) {
-			throw new FileProblemException("Problemi nel leggere il file!");
+			throw new FileProblemException("Problems reading the file!");
 		} catch (IOException e) {
-			throw new FileProblemException("Problemi nel leggere il file!");
+			throw new FileProblemException("Problems reading the file!");
 		}
 	}
 
 	/**
-	 * data una lista di stringhe, le scrivo su file
+	 * given a list of strings, I am writing to file
 	 */
 	public static void writeLines(final File output, final List<String> lines) throws FileProblemException {
 
@@ -109,9 +109,9 @@ public class FileUtilities {
 			writer.close();
 
 		} catch (FileNotFoundException e) {
-			throw new FileProblemException("Problemi nel leggere il file!");
+			throw new FileProblemException("Problems reading the file!");
 		} catch (IOException e) {
-			throw new FileProblemException("Problemi nel leggere il file!");
+			throw new FileProblemException("Problems reading the file!");
 		}
 
 	}

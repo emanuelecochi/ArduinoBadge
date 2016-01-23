@@ -16,14 +16,14 @@ public class ArduinoBadge {
 	
 	private Statement stmt = null;
 	private Connection conn = null;
-    String[] listPort = null;
+	static String[] listPort = null;
 	
 	public static void main(String args[]) throws ClassNotFoundException, SQLException, FileProblemException {
 
     	ArduinoBadge db = new ArduinoBadge();
         db.ConnectionDB();
 		// Save in listPort the list of the ports present
-    	db.listPort = ArduinoBadge.listPort();
+    	listPort = ArduinoBadge.listPort();
         
     	// Allow the selection of the serial port to use
     	Scanner s = new Scanner(System.in);

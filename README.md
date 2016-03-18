@@ -12,3 +12,4 @@ The libraries necessary for code Java are:
 - jSSC (https://github.com/scream3r/java-simple-serial-connector/releases) License: GNU Lesser General Public License
 - sqlite-jdbc (https://bitbucket.org/xerial/sqlite-jdbc)
 
+The project is described in this article http://www.esperienzahitech.it/arduino/arduino-badge-rfid-java/

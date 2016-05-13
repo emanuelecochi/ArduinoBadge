@@ -22,7 +22,7 @@ public class ArduinoBadge {
 
     	ArduinoBadge db = new ArduinoBadge();
         db.ConnectionDB();
-		// Save in listPort the list of the ports present
+	// Save in listPort the list of the ports present
     	db.listPort = ArduinoBadge.listPort();
         
     	// Allow the selection of the serial port to use
@@ -34,7 +34,7 @@ public class ArduinoBadge {
         String input = "";
         
         try {
-        	// Open the serial port
+            // Open the serial port
             System.out.println("Port opened: " + serialPort.openPort());
             // Set the serial port parameters
             System.out.println("Params setted: " + serialPort.setParams(9600, 8, 1, 0));
@@ -75,7 +75,7 @@ public class ArduinoBadge {
 	
 	public boolean CheckBadge(String input) throws ClassNotFoundException, SQLException, FileProblemException {
 		
-		// Instantiate a Date object
+	    // Instantiate a Date object
 	    Date date = new Date();
 		
 		System.out.println("\n2) Check Badge............................");
